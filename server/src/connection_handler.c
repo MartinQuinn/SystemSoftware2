@@ -14,6 +14,7 @@
 #define PATH_SIZE 500
 #define FILE_SIZE 512
 #define WEBSITE_DIR "../website"
+#define LOG_DIR "../storage/log.txt"
 #define CRED_DIR "../storage/credentials.txt"
 
 // Mutex to prevent file locking
@@ -113,8 +114,25 @@ void *connection_handler(void *socket_desc) {
         }
       }
 
-      puts("Transfer complete\n");
+      FILE *logging;
+      time_t rawtime;
+      struct tm * timeinfo;
+      time ( &rawtime );
+      timeinfo = localtime ( &rawtime );
+
+      logging = fopen(LOG_DIR, "a+"); // a+ (create + append) option will allow appending which is useful in a log file
+      if (logging == NULL) {
+        puts("Logging incomplete!\n");
+      }
+      fprintf(logging, "-----------------------------------------------------------\n");
+      fprintf(logging, "User: %s modified %s at %s", username, client_filename, asctime (timeinfo));
+      fprintf(logging, "-----------------------------------------------------------\n\n");
+      puts("Logging complete!\n");
+      puts("Transfer completed\n");
+
+
       send(sock, "OK", sizeof("OK"), 0);
+      fclose(logging);
       fclose(file_open);
 
       // Unlock shared resource
