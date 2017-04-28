@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
       puts("\nChoose a path: \n 1: Root \n 2: Sales \n 3: Promotions \n 4: Offers \n 5: Marketing \n Input your choice here: ");
       scanf("%s", option);
 
-      // If Else used for choosing destination directory
+      // If else used for choosing destination directory
       if (strcmp(option, "1") == 0) {
         send(sock, "/", strlen("/"), 0);
       } else if (strcmp(option, "2") == 0) {
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
       // Begin transfer of file. File must not be empty.
 	    while((block_size = fread(file_buffer, sizeof(char), FILE_SIZE, file_open)) > 0) {
 
-    		printf("Data sent %d = %d\n", i, block_size);
+    		printf("The data sent %d = %d\n", i, block_size);
 
     		if (send(sock, file_buffer, block_size, 0) < 0) {
             return 1;
@@ -121,9 +121,9 @@ int main(int argc, char *argv[]) {
       recv(sock, response, 10, 0);
 
       if (strcmp(response, "OK") == 0) {
-        puts("Transfer successful\n");
+        puts("Transfer was successful\n");
       } else {
-        puts("Transfer failure\n");
+        puts("Transfer was a failure\n");
         close(sock);
         return 1;
       }
@@ -134,7 +134,7 @@ int main(int argc, char *argv[]) {
       close(sock);
       return 0;
     } else {
-      puts("Connection not closed");
+      puts("Connection is not closed");
     }
   }// End 1. file transfer
 } // End all

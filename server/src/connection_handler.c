@@ -120,7 +120,7 @@ void *connection_handler(void *socket_desc) {
       time ( &rawtime );
       timeinfo = localtime ( &rawtime );
 
-      logging = fopen(LOG_DIR, "a+"); // a+ (create + append) option will allow appending which is useful in a log file
+      logging = fopen(LOG_DIR, "a+"); // a+ (create + append) option will allow appending
       if (logging == NULL) {
         puts("Logging incomplete!\n");
       }
